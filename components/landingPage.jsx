@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { Button } from "./ui/button";
+import Link from "next/link";
 import { MacbookScroll } from "./ui/macbook-scroll";
 import { TypewriterEffectSmooth } from "./ui/typewriter-effect";
 
@@ -25,7 +26,7 @@ export default function LandingPageContent() {
 //   }, []);
 
   // Clases dinámicas para el logo
-  const logoClasses = `text-blue-950 tracking-widest text-xl  absolute`;
+  const logoClasses = `text-blue-950 tracking-widest text-2xl font-semibold  absolute`;
 
   function NavItem({ children }) {
     return (
@@ -60,7 +61,7 @@ export default function LandingPageContent() {
 
         {/* El resto de la barra de navegación aparece después de la animación del logo */}
         <div className={`
-          w-2/3 h-16 flex flex-row justify-center items-center `}>
+          w-2/3 h-16 flex flex-row justify-center items-end`}>
           <div className="w-1/2 min-h-16 flex justify-center items-center">
             <ul className="w-full text-gray-400 tracking-wide flex flex-row justify-around text-sm">
               <NavItem>Características</NavItem>
@@ -69,8 +70,16 @@ export default function LandingPageContent() {
             </ul>
           </div>
           <div className="w-1/2 min-h-16 flex justify-center items-center space-x-8 ">
-            <Button className={"bg-blue-950 cursor-pointer"}>Ingresar</Button>
-            <Button className={"bg-blue-500 text-white hover:text-blue-950 cursor-pointer"} variant={"outline"}>Registrarse</Button>
+            <Button  className={"bg-blue-950 cursor-pointer"} asChild>
+              <Link href={"/auth?login=true"} >
+              Ingresar
+              </Link>
+              </Button>
+            <Button className={"bg-blue-500 text-white hover:text-blue-950 cursor-pointer"} variant={"outline"}>
+               <Link href={"/auth?login=false"}>
+              Registrarse
+               </Link>
+            </Button>
           </div>
         </div>
       </div>

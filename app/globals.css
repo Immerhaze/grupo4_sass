@@ -137,3 +137,30 @@ html, body {
 }
 
 
+/* Estilo para un scrollbar horizontal sutil */
+
+/* Aplicable al contenedor que tendrá el scroll horizontal */
+.subtle-horizontal-scrollbar {
+  /* Para Firefox */
+  scrollbar-width: none; /* 'auto' | 'thin' | 'none' */
+  scrollbar-color: #d1d5db transparent; /* color del pulgar (thumb) y color de la pista (track) */
+}
+
+/* Para navegadores basados en Webkit (Chrome, Safari, Edge, Opera) */
+.subtle-horizontal-scrollbar::-webkit-scrollbar {
+  height: 6px; /* Altura de la barra de desplazamiento horizontal */
+  background-color: transparent; /* Fondo transparente para la barra completa */
+}
+
+.subtle-horizontal-scrollbar::-webkit-scrollbar-track {
+  background: transparent; /* Fondo de la pista transparente */
+}
+
+.subtle-horizontal-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #d1d5db; /* Gris claro para el pulgar (thumb) - tailwind gray-300 */
+  border-radius: 3px; /* Bordes ligeramente redondeados para el pulgar */
+}
+
+.subtle-horizontal-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #9ca3af; /* Un gris un poco más oscuro al pasar el ratón - tailwind gray-400 */
+}
