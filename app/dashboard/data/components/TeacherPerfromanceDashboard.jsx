@@ -16,7 +16,7 @@ import {
     getChiefCourseSubjectOverallAverages, // New import
     getChiefCourseStudentOverallPerformance, // New import
     getChiefCourseStudentsAtRisk, // New import
-} from '@/DummyPerformanceOverallData';
+} from '@/lib/DummyPerformanceOverallData';
 
 
 // --- DUMMY TEACHER ID FOR TESTING UI ---

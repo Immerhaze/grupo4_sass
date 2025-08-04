@@ -36,10 +36,14 @@ import {
 import { Button } from '@/components/ui/button';
 
 // Import the new sub-component
-import UserTableControls from './UserTableControls'; // Adjust path as needed
+import UserTableControls from './UserTableControls';
+import ImportUsersModal from './ImportUsersModal';
+
 
 // Import your dummy data (ensure it's updated to use arrays for 'curso')
 import { DUMMY_USERS } from '@/public/dummydata';
+import RegisterUserModal from './RegisterUserForm';
+
 
 // Helper for pagination (same as before)
 const range = (start, end) => {
@@ -53,6 +57,9 @@ export default function UserManagementTable() {
   const [filterRol, setFilterRol] = useState('Todos');
   const [filterCourse, setFilterCourse] = useState('Todos');
   const [filterStatus, setFilterStatus] = useState('Todos');
+  const [showRegisterModal, setShowRegisterModal] = useState(false);
+  const [isImportModalOpen, setIsImportModalOpen] = useState(false);
+
 
   const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 7 ;
@@ -139,20 +146,26 @@ export default function UserManagementTable() {
   }, [totalPages, currentPage]);
 
 
-  // Placeholder functions for button actions
-  const handleRegisterUser = () => {
-    alert('Registrar usuario clicked!');
-  };
 
-  const handleListExcel = () => {
-    alert('Listar con excel clicked!');
-  };
+
+ const handleListExcel = () => {
+  setIsImportModalOpen(true);
+};
+
+  const handleRegisterUser = (newUser) => {
+  console.log('User registered:', newUser);
+  alert(`User ${newUser.name} registered!`);
+
+  // Optional: Add to user list immediately (for demo purposes)
+  setUsers(prev => [...prev, newUser]);
+};
 
   return (
     // TooltipProvider should wrap the highest common ancestor where tooltips are used.
     // Placing it here ensures all tooltips within UserManagementTable work.
+    <>
     <TooltipProvider>
-      <div className="p-6 bg-white shadow-md w-full h-screen mx-auto">
+      <div className="p-6 bg-[#F9FAFB] shadow-md w-full h-screen mx-auto">
         <UserTableControls
           searchTerm={searchTerm}
           onSearchChange={setSearchTerm}
@@ -165,14 +178,14 @@ export default function UserManagementTable() {
           rolOptions={rolOptions}
           courseOptions={courseOptions}
           statusOptions={statusOptions}
-          onRegisterUserClick={handleRegisterUser}
+          onRegisterUserClick={() => setShowRegisterModal(true)}
           onListExcelClick={handleListExcel}
         />
 
         {/* Users Table */}
-        <div className="overflow-x-auto border rounded-md">
+        <div className=" bg-white overflow-x-auto border-2  p-4 rounded-xl  shadow-md">
           <Table>
-            <TableHeader className="bg-gray-50">
+            <TableHeader>
               <TableRow>
                 <TableHead className="w-[100px]">Id</TableHead>
                 <TableHead>Nombre</TableHead>
@@ -295,6 +308,16 @@ export default function UserManagementTable() {
           </PaginationContent>
         </Pagination>
       </div>
-    </TooltipProvider>
+      </TooltipProvider>
+      <RegisterUserModal
+        open={showRegisterModal}
+        onClose={() => setShowRegisterModal(false)}
+        onRegister={handleRegisterUser}
+       />
+       <ImportUsersModal
+        open={isImportModalOpen}
+        onClose={() => setIsImportModalOpen(false)}
+        onImport={(fileName) => alert(`Imported users from ${fileName}`)}/>
+      </>
   );
 }

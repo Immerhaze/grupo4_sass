@@ -16,7 +16,14 @@ export function BarChartComponent({ data, xAxisDataKey, barDataKey, title, descr
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey={xAxisDataKey} />
             <YAxis domain={[0, 10]} /> {/* Assuming grades are 0-10 */}
-            <Tooltip />
+             <Tooltip 
+             formatter={(value, name) => {
+              if (name === barDataKey) {
+               return [value, 'Nota Promedio']; // Custom label on hover
+                 }
+                 return [value, name];
+                 }}
+                />
             <Bar dataKey={barDataKey} fill={fill} />
           </BarChart>
         </ResponsiveContainer>

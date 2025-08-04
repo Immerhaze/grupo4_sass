@@ -4,12 +4,12 @@
 'use client' 
 
 import React from 'react';
-import GradesDashboard from './components/GradesDashboard';
+import GradesPage from './components/GradesDashboard';
 
-export default function GradesPage() {
+export default function DataPage() {
   return (
-       <div className="h-screen w-full flex flex-col overflow-hidden">
-      <GradesDashboard/>
+    <div className="h-screen w-full flex flex-col overflow-hidden">
+      <GradesPage/>
     </div>
 
   );

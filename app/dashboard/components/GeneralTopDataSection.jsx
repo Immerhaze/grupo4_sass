@@ -86,7 +86,7 @@ export default function GeneralTopDataSection(){
     return(
         // 'w-11/11' is not standard Tailwind. Assuming 'w-full' for typical behavior.
         // If 'w-11/11' is a custom class, keep it.
-        <div className="w-full h-2/10 px-4 pt-4 flex flex-col items-start justify-between ">
+        <div className="w-full h-2/10 bg-[#F9FAFB] px-4 pt-4 flex flex-col items-start justify-between ">
 
             {/* Header and Search Input */}
             <div className="h-1/4 w-full flex flex-row justify-between items-center">
@@ -131,7 +131,7 @@ export default function GeneralTopDataSection(){
                             <div
                                 key={index}
                                 // Add a unique class to easily select it for width calculation
-                                className="bg-blue-300 kpi-card-item min-w-[140px] h-full flex mx-4  flex-col items-center rounded-sm  border-[0.5px] group hover:shadow-md transition-all duration-200 ease-in cursor-pointer"
+                                className=" kpi-card-item bg-white min-w-[140px] h-full flex mx-4  p-2 flex-col items-center rounded-sm  border-[0.5px] group hover:shadow-md transition-all duration-200 ease-in cursor-pointer"
                             >
                                 <span className={`text-xs font-medium group-hover:text-blue-500 transition-colors duration-300 ease-in`}>{item.subject}</span>
                                 <div className="w-full h-full flex flex-row items-center justify-around ">
@@ -141,7 +141,7 @@ export default function GeneralTopDataSection(){
                                         maxValue={10}
                                         fillColor={getFillDonutColor(item.avgGrade)}
                                         emptyColor="stroke-red-500"
-                                        size={80} // Dynamic size for hover effect (from previous step)
+                                        size={70} // Dynamic size for hover effect (from previous step)
                                         strokeWidth={10}
                                         label={item.avgGrade.toFixed(1)}
                                     />

@@ -13,7 +13,7 @@ import {
     getAdminOverallSubjectPerformance,
     getAdminCourseSubjectOverallAverages, // New import
     getAdminTeacherCourseAverages, // New import
-} from '@/DummyPerformanceOverallData'; // Corrected import path from '@/DummyPerformanceOverallData' to '@/lib/dummyPerformanceData'
+} from '@/lib/DummyPerformanceOverallData'; // Corrected import path from '@/DummyPerformanceOverallData' to '@/lib/dummyPerformanceData'
 
 
 const AdminDashboard = () => {

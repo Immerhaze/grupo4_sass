@@ -1,8 +1,8 @@
 'use client'
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import LandingPageContent from "@/components/landingPage";
-import IntroPage from "@/components/introPage";
+import LandingPageContent from "@/components/landing/landingPage";
+import IntroPage from "@/components/landing/introPage";
 
 export default function Home() {
   const [showIntro, setShowIntro] = useState(true);
@@ -21,7 +21,7 @@ export default function Home() {
   return (
     <>
       {showIntro ? <IntroPage /> : 
-      <div className=" min-w-7xl max-w-7xl justify-self-center">
+      <div className=" w-full justify-self-center">
         <LandingPageContent />
       </div>
       }

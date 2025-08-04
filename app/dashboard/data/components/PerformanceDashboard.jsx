@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react'; // Import useEffect
 import AdminPerformanceDashboard from './AdminPerformanceDashboard';
 import TeacherPerformanceDashboard from './TeacherPerfromanceDashboard';
 import { Button } from '@/components/ui/button';
-import { DUMMY_TEACHERS } from "@/DummyPerformanceOverallData"; // Import DUMMY_TEACHERS here too
+import { DUMMY_TEACHERS } from "@/lib/DummyPerformanceOverallData"; // Import DUMMY_TEACHERS here too
 
 export default function PerformanceDashboard() {
   const [userRole, setUserRole] = useState('admin');

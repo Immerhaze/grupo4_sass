@@ -2,7 +2,7 @@
 import React from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ALL_SUBJECTS } from '@/DummyPerformanceOverallData'; // <--- ADD THIS IMPORT
+import { ALL_SUBJECTS } from '@/lib/DummyPerformanceOverallData'; // <--- ADD THIS IMPORT
 
 export function LineChartComponent({ data, xAxisDataKey, lineDataKey, title, description, stroke = "#8884d8" }) {
   return (
@@ -17,8 +17,14 @@ export function LineChartComponent({ data, xAxisDataKey, lineDataKey, title, des
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey={xAxisDataKey} />
             <YAxis domain={[0, 10]} />
-            <Tooltip />
-            <Legend />
+              <Tooltip 
+                         formatter={(value, name) => {
+                          if (name === lineDataKey) {
+                           return [value, 'Nota Promedio']; // Custom label on hover
+                             }
+                             return [value, name];
+                             }}
+                            />
             <Line type="monotone" dataKey={lineDataKey} stroke={stroke} activeDot={{ r: 8 }} />
           </LineChart>
         </ResponsiveContainer>
