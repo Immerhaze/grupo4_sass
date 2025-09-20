@@ -1,0 +1,124 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum InstitutionStatus {
+  DRAFT
+  ACTIVE
+  SUSPENDED
+  CANCELED
+}
+
+model Institution {
+  id                 String            @id @default(uuid())
+  name               String
+  contactEmail       String?
+  address            String?
+  users              User[]
+  courses            Course[]
+  posts              Post[]
+
+  status             InstitutionStatus @default(DRAFT)
+  billingCustomerId  String?           // stripe customer id
+  subscriptionId     String?
+  onboardingToken    String?           @unique
+  onboardingExpiresAt DateTime?
+  onboardingDraft    Json?             // hold partial admin info, etc.
+
+  createdAt          DateTime @default(now())
+  updatedAt DateTime? @updatedAt
+
+}
+
+model User {
+  id            String   @id @default(uuid())
+  name          String
+  email         String   @unique
+  password      String?  // Si es con OAuth, puede ser null
+  role          Role     @default(STUDENT)
+  position      String?
+  document      String?
+  institution   Institution @relation(fields: [institutionId], references: [id])
+  institutionId String
+
+  // Relaciones
+  coursesTeaching Course[] @relation("TeachingCourses")
+  chiefOfCourses  Course[] @relation("ChiefCourses")
+  studentCourses  Course[] @relation("CourseStudents")
+  subjectsTaught  Subject[]
+  grades          StudentGrade[]
+  posts           Post[] @relation("PostAuthor")
+}
+
+enum Role {
+  SUPER_ADMIN
+  ADMIN
+  TEACHER
+  STUDENT
+}
+
+model Course {
+  id              String      @id @default(uuid())
+  name            String
+  institutionId   String
+  institution     Institution @relation(fields: [institutionId], references: [id])
+
+  students        User[]  @relation("CourseStudents")
+  teachers        User[]  @relation("TeachingCourses")
+  chiefTeacher    User?   @relation("ChiefCourses", fields: [chiefTeacherId], references: [id])
+  chiefTeacherId  String?
+
+  subjects        Subject[]
+  posts           Post[] @relation("PostCourses")
+}
+
+model Subject {
+  id        String   @id @default(uuid())
+  name      String
+  courseId  String
+  course    Course   @relation(fields: [courseId], references: [id])
+  teacher   User     @relation(fields: [teacherId], references: [id])
+  teacherId String
+  grades    StudentGrade[]
+}
+
+model Period {
+  id        String   @id @default(uuid())
+  name      String
+  startDate DateTime
+  endDate   DateTime
+  grades    StudentGrade[]
+}
+
+model StudentGrade {
+  id        String   @id @default(uuid())
+  student   User     @relation(fields: [studentId], references: [id])
+  studentId String
+  subject   Subject  @relation(fields: [subjectId], references: [id])
+  subjectId String
+  period    Period   @relation(fields: [periodId], references: [id])
+  periodId  String
+
+  itemTitle String
+  grade     Float
+  feedback  String?
+}
+
+model Post {
+  id             String      @id @default(uuid())
+  title          String
+  content        String
+  createdAt      DateTime    @default(now())
+  isPublic       Boolean     @default(false)
+
+  author         User        @relation("PostAuthor", fields: [authorId], references: [id])
+  authorId       String
+  courses        Course[]    @relation("PostCourses")
+  institution    Institution @relation(fields: [institutionId], references: [id])
+  institutionId  String
+}

@@ -16,7 +16,11 @@ export default function LoginForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <section className="min-h-screen flex flex-col justify-center items-center p-6 ">
+      <form
+        onSubmit={handleSubmit}
+        className="w-full max-w-md bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 space-y-6 animate-fade-in"
+      >
       <h2 className="text-3xl font-bold text-gray-900 dark:text-white animate-slide-in-right duration-300">Inicia sesión</h2>
       <div className='animate-slide-in-right duration-300 delay-300'>
         <label htmlFor="email" className="text-sm font-medium text-gray-700 dark:text-gray-300  flex  flex-row justify-start items-center">
@@ -51,5 +55,6 @@ export default function LoginForm() {
         Ingresar
       </Button>
     </form>
+    </section>
   );
 }

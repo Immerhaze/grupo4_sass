@@ -64,6 +64,7 @@ export default function AuthPage() {
       {/* Lado derecho: Dinámico (cambia entre login y registro) */}
       <div className="w-1/2 flex justify-center items-center p-8 bg-white dark:bg-gray-900">
         <div className="w-full max-w-md">
+
           {isLogin ? <LoginForm /> : <RegisterForm />}
         </div>
       </div>
