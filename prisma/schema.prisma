@@ -1,0 +1,50 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")   // Neon pooled (runtime)
+  directUrl = env("DIRECT_URL")     // Neon direct (migrations)
+}
+
+enum InstitutionStatus {
+  draft
+  active
+  suspended
+}
+
+enum UserRole {
+  ADMINISTRATIVE
+  TEACHER
+  STUDENT
+}
+
+model Institution {
+  id           String   @id @default(uuid()) @db.Uuid
+  name         String
+  domainSlug   String?  @unique              // ej: "colegio-x" para subdominio
+  contactEmail String?
+  status       InstitutionStatus @default(draft)
+  trialEndsAt  DateTime?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  users        User[]
+}
+
+model User {
+  id            String       @id @default(uuid()) @db.Uuid
+  institution   Institution  @relation(fields: [institutionId], references: [id], onDelete: Cascade)
+  institutionId String       @db.Uuid
+
+  email         String       @db.Citext         // case-insensitive (citext)
+  passwordHash  String?
+  fullName      String
+  role          UserRole
+  isActive      Boolean      @default(true)
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
+  @@unique([institutionId, email])             // único dentro de la institución
+}
